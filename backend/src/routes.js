@@ -1,14 +1,12 @@
 const express = require('express');
 
-const app = express();
+const routes = express.Router();
 
-app.get('/', (req,res)=>{
+routes.get('/', (req,res)=>{
   return res.json({
     evento: 'Semana Omnistack 11',
     aluno: 'Gabriel Fernandes'
   });
 });
 
-app.listen(3333, ()=>{
-  console.log(`Backend escutando: http://localhost:3333`);
-});
+module.exports = routes;
