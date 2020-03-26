@@ -5,8 +5,10 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Linking
 } from 'react-native';
+import * as MailCompose from 'expo-mail-composer';
 
 import logoImg from '../../assets/logo.png';
 
@@ -14,9 +16,22 @@ import styles from  './styles';
 
 export default function Detail() {
   const navigation = useNavigation();
+  const message = 'Olá, estou entrando em contato pois gostaria de ajudar no caso "Foo foo foo" com o valor de 200 reais.'
 
   function navigateBack() {
     navigation.goBack();
+  }
+
+  function sendMail() {
+    MailCompose.composeAsync({
+      subject: `Heroi do caso: `,
+      recipients: ['email@email.com'],
+      body: message,
+    })
+  }
+
+  function sendWhatsapp() {
+    Linking.openURL(`whatsapp://send?phone=00000000000&text=${message}`)
   }
 
   return (
@@ -52,11 +67,17 @@ export default function Detail() {
         <Text style={styles.heroDescription}>Entre em contato:</Text>
 
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.action}>
+          <TouchableOpacity
+            onPress={sendWhatsapp}
+            style={styles.action}
+          >
             <Text style={styles.actionText}>WhatsApp</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.action}>
+          <TouchableOpacity
+            onPress={sendMail}
+            style={styles.action}
+          >
             <Text style={styles.actionText}>E-mail</Text>
           </TouchableOpacity>
         </View>
